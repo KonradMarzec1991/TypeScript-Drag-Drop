@@ -8,6 +8,27 @@ interface Validatable {
     max?: number;
 }
 
+function validate(validateInput: Validatable) {
+    let isValid = true;
+    if (validateInput.required) {
+        isValid = isValid && validateInput.value.toString().trim().length !== 0;
+    }
+    if (validateInput.minLength) {
+
+    }
+    if (validateInput.maxLength) {
+
+    }
+    if (validateInput.min) {
+
+    }
+    if (validateInput.max) {
+
+    }
+
+    return isValid;
+}
+
 // autobind decorator
 function autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
