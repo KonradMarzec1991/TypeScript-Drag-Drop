@@ -1,3 +1,13 @@
+// Validation
+interface Validatable {
+    value: string | number;
+    required?: boolean;
+    minLength?: number;
+    maxLength?: number;
+    min?: number;
+    max?: number;
+}
+
 // autobind decorator
 function autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
@@ -42,7 +52,11 @@ class ProjectInput {
         const enteredDescription = this.descriptionInputElement.value;
         const enteredPeople = this.peopleInputElement.value;
 
-        if (enteredTitle.trim().length === 0 || enteredDescription.trim().length === 0 || enteredPeople.trim().length === 0) {
+        if (
+            validate({value: enteredTitle, required: true, minLength: 5}) &&
+            validate({value: enteredDescription, required: true, minLength: 5}) &&
+            validate({value: enteredPeople, required: true, minLength: 5})
+        ) {
             alert("Invalid input, please try again!");
             return;
         } else {
