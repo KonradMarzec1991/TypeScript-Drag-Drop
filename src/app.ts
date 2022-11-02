@@ -13,17 +13,17 @@ function validate(validateInput: Validatable) {
     if (validateInput.required) {
         isValid = isValid && validateInput.value.toString().trim().length !== 0;
     }
-    if (validateInput.minLength) {
-
+    if (validateInput.minLength && typeof validateInput.value === "string") {
+        isValid = isValid && validateInput.value.length >= validateInput.minLength;
     }
-    if (validateInput.maxLength) {
-
+    if (validateInput.maxLength && typeof validateInput.value === "string") {
+        isValid = isValid && validateInput.value.length <= validateInput.maxLength;
     }
-    if (validateInput.min) {
-
+    if (validateInput.min && typeof validateInput.value === "number") {
+        isValid = isValid && validateInput.value >= validateInput.min;
     }
-    if (validateInput.max) {
-
+    if (validateInput.max && typeof validateInput.value === "number") {
+        isValid = isValid && validateInput.value <= validateInput.max;
     }
 
     return isValid;
@@ -73,10 +73,28 @@ class ProjectInput {
         const enteredDescription = this.descriptionInputElement.value;
         const enteredPeople = this.peopleInputElement.value;
 
+        const titleValidatable: Validatable = {
+            value: enteredTitle,
+            required: true
+        };
+
+        const descriptionValidatable: Validatable = {
+            value: enteredDescription,
+            required: true,
+            minLength: 5
+        };
+
+        const peopleValidatable: Validatable = {
+            value: enteredPeople,
+            required: true,
+            min: 1,
+            max: 5
+        };
+
         if (
-            validate({value: enteredTitle, required: true, minLength: 5}) &&
-            validate({value: enteredDescription, required: true, minLength: 5}) &&
-            validate({value: enteredPeople, required: true, minLength: 5})
+            !validate(titleValidatable) ||
+            !validate(descriptionValidatable) ||
+            !validate(peopleValidatable)
         ) {
             alert("Invalid input, please try again!");
             return;
