@@ -171,7 +171,19 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements 
         this.renderContent();
     }
 
-    configure(): void {}
+    @autobind
+    dragStartHandler(event: DragEvent) {
+        console.log(event);
+    }
+
+    dragEndHandler(_: DragEvent) {
+        console.log("DragEnd");
+    }
+
+    configure(): void {
+        this.element.addEventListener("dragstart", this.dragStartHandler);
+        this.element.addEventListener("dragend", this.dragEndHandler);
+    }
 
     renderContent(): void {
         this.element.querySelector("h2")!.textContent = this.project.title;
@@ -181,7 +193,7 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements 
 }
 
 // ProjectList Class
-class ProjectList extends Component<HTMLDivElement, HTMLElement> {
+class ProjectList extends Component<HTMLDivElement, HTMLElement> implements DragTarget {
     assignedProjects: Project[];
 
     constructor(private type: "active" | "finished") {
@@ -190,6 +202,18 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
 
         this.configure();
         this.renderContent();
+    }
+
+    dragOverHandler(event: DragEvent) {
+
+    }
+
+    dropHandler(event: DragEvent) {
+
+    }
+
+    dragLeaveHandler(event: DragEvent) {
+
     }
 
     configure(): void {
