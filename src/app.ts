@@ -7,10 +7,10 @@ enum ProjectStatus {
 // Project class
 class Project {
     constructor(
-        public id: string, 
-        public title: string, 
-        public description: string, 
-        public people: number, 
+        public id: string,
+        public title: string,
+        public description: string,
+        public people: number,
         public status: ProjectStatus
     ) {}
 }
@@ -45,10 +45,10 @@ class ProjectState extends State<Project> {
 
     addProject(title: string, description: string, numOfPeople: number): void {
         const newProject = new Project(
-            Math.random().toString(), 
-            title, 
-            description, 
-            numOfPeople, 
+            Math.random().toString(),
+            title,
+            description,
+            numOfPeople,
             ProjectStatus.Active
         )
         this.projects.push(newProject);
@@ -130,7 +130,7 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
 
     private attach(insertAtBeginning: boolean) {
         this.hostElement.insertAdjacentElement(
-            insertAtBeginning ? "afterbegin": "beforeend", 
+            insertAtBeginning ? "afterbegin": "beforeend",
             this.element
         );
     }
@@ -167,7 +167,6 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
     constructor(private type: "active" | "finished") {
         super("project-list", "app", false,`${type}-projects`);
         this.assignedProjects = [];
-        this.element.id = `${this.type}-projects`;
 
         this.configure();
         this.renderContent();
@@ -196,7 +195,7 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> {
         const listEl = document.getElementById(`${this.type}-projects-list`) as HTMLUListElement;
         listEl.innerHTML = "";
         for (const prjItem of this.assignedProjects) {
-            new ProjectItem(this.element.id, prjItem);
+            new ProjectItem(this.element.querySelector("ul")!.id, prjItem);
         }
     }
 }
